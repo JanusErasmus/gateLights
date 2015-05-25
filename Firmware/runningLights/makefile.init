@@ -1,0 +1,2 @@
+copy-hex:
+	cp runningLights.hex /home/janus/Projects/linuxslljig/build-SLLjig-Desktop-Release/ups.hex
