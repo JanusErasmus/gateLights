@@ -62,7 +62,10 @@ int main(void)
 ISR(PCINT0_vect)
 {
 	cli();
-	_delay_ms(10);
+
+	GIMSK &= ~(1 << PCIE0);
+	_delay_ms(100);
+
 
 	if(!(PINA & (1 << 3)))
 	{
@@ -76,6 +79,8 @@ ISR(PCINT0_vect)
 		led_switchUp();
 	}
 
+	GIFR = (1 << PCIE0);
+	GIMSK |= (1 << PCIE0);
 	sei();
 }
 

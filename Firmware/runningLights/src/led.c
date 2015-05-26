@@ -1,6 +1,8 @@
 #include "config.h"
 #include <avr/io.h>
 
+#define FLICKER_DELAY 250
+
 uint8_t count = 0;
 
 void led_init()
@@ -86,10 +88,12 @@ void setLED(uint8_t num)
 
 void led_runUp()
 {
+	count = 0;
+
 	while(count++ < 5)
 	{
 		setLED(count);
-		_delay_ms(125);
+		_delay_ms(FLICKER_DELAY);
 	};
 
 	count = 0;
@@ -103,15 +107,15 @@ void led_switchUp()
 	LED3_PORT &= ~(LED3_PIN) ;
 	LED4_PORT &= ~(LED4_PIN) ;
 	LED5_PORT &= ~(LED5_PIN) ;
-	_delay_ms(125);
+	_delay_ms(FLICKER_DELAY);
 	LED2_PORT |= LED2_PIN ;
-	_delay_ms(125);
+	_delay_ms(FLICKER_DELAY);
 	LED3_PORT |= LED3_PIN ;
-	_delay_ms(125);
+	_delay_ms(FLICKER_DELAY);
 	LED4_PORT |= LED4_PIN ;
-	_delay_ms(125);
+	_delay_ms(FLICKER_DELAY);
 	LED5_PORT |= LED5_PIN ;
-	_delay_ms(125);
+	_delay_ms(FLICKER_DELAY);
 }
 
 void led_runDown()
@@ -121,7 +125,7 @@ void led_runDown()
 	while(count-- > 0)
 	{
 		setLED(count);
-		_delay_ms(125);
+		_delay_ms(FLICKER_DELAY);
 	};
 }
 
@@ -132,15 +136,15 @@ void led_switchDown()
 	LED3_PORT &= ~(LED3_PIN) ;
 	LED4_PORT &= ~(LED4_PIN) ;
 	LED5_PORT |= (LED5_PIN) ;
-	_delay_ms(125);
+	_delay_ms(FLICKER_DELAY);
 	LED4_PORT |= LED4_PIN ;
-	_delay_ms(125);
+	_delay_ms(FLICKER_DELAY);
 	LED3_PORT |= LED3_PIN ;
-	_delay_ms(125);
+	_delay_ms(FLICKER_DELAY);
 	LED2_PORT |= LED2_PIN ;
-	_delay_ms(125);
+	_delay_ms(FLICKER_DELAY);
 	LED1_PORT |= LED1_PIN ;
-	_delay_ms(125);
+	_delay_ms(FLICKER_DELAY);
 }
 
 void led_switchON()
