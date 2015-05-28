@@ -18,6 +18,13 @@ enum ledState
 	on
 };
 
+typedef struct
+{
+	volatile uint8_t * ddr_reg;
+	volatile uint8_t * port_reg;
+	uint8_t pin;
+}ledPins;
+
 
 void led_init();
 void led_setState(uint8_t state);

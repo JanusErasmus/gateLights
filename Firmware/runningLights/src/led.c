@@ -41,6 +41,50 @@ void led_setState(uint8_t state)
 	led_state = state;
 }
 
+void led_set(uint8_t led)
+{
+	switch(led)
+	{
+	case 1:
+		LED1_PORT |= (LED1_PIN) ;
+		break;
+	case 2:
+		LED2_PORT |= (LED2_PIN) ;
+		break;
+	case 3:
+		LED3_PORT |= (LED2_PIN) ;
+		break;
+	case 4:
+		LED4_PORT |= (LED4_PIN) ;
+		break;
+	case 5:
+		LED5_PORT |= (LED5_PIN) ;
+		break;
+	}
+}
+
+void led_clear(uint8_t led)
+{
+	switch(led)
+	{
+	case 1:
+		LED1_PORT &= ~(LED1_PIN) ;
+		break;
+	case 2:
+		LED2_PORT &= ~(LED2_PIN) ;
+		break;
+	case 3:
+		LED3_PORT &= ~(LED2_PIN) ;
+		break;
+	case 4:
+		LED4_PORT &= ~(LED4_PIN) ;
+		break;
+	case 5:
+		LED5_PORT &= ~(LED5_PIN) ;
+		break;
+	}
+}
+
 void led_setRed()
 {
 	LEDR_PORT |= LEDR_PIN ;
@@ -61,53 +105,24 @@ void led_setOff()
 
 void led_setLED(uint8_t num, uint8_t onOff)
 {
-	volatile uint8_t * port = 0;
-	uint8_t pin = 0;
-
-	switch(num)
-	{
-	case 1:
-		port = &LED1_PORT;
-		pin = LED1_PIN;
-		break;
-	case 2:
-		port = &LED2_PORT;
-		pin = LED2_PIN;
-		break;
-	case 3:
-		port = &LED3_PORT;
-		pin = LED3_PIN;
-		break;
-	case 4:
-		port = &LED4_PORT;
-		pin = LED4_PIN;
-		break;
-	case 5:
-		port = &LED5_PORT;
-		pin = LED5_PIN;
-		break;
-	}
-
 	if(onOff)
 	{
-		LED1_PORT |= (LED1_PIN) ;
-		LED2_PORT |= (LED2_PIN) ;
-		LED3_PORT |= (LED3_PIN) ;
-		LED4_PORT |= (LED4_PIN) ;
-		LED5_PORT |= (LED5_PIN) ;
-		*port &= ~(pin);
+		led_set(1);
+		led_set(2);
+		led_set(3);
+		led_set(4);
+		led_set(5);
+		led_clear(num);
 	}
 	else
 	{
-		LED1_PORT &= ~(LED1_PIN) ;
-		LED2_PORT &= ~(LED2_PIN) ;
-		LED3_PORT &= ~(LED3_PIN) ;
-		LED4_PORT &= ~(LED4_PIN) ;
-		LED5_PORT &= ~(LED5_PIN) ;
-		*port |= pin;
+		led_clear(1);
+		led_clear(2);
+		led_clear(3);
+		led_clear(4);
+		led_clear(5);
+		led_set(num);
 	}
-
-
 }
 
 void led_runUp(uint8_t onOff)
@@ -126,16 +141,11 @@ void led_runUp(uint8_t onOff)
 
 void led_switchUp()
 {
-		LED1_PORT |= LED1_PIN ;
+	for (uint8_t k = 1; k < 6; ++k)
+	{
+		led_set(k);
 		_delay_ms(FLICKER_DELAY);
-		LED2_PORT |= LED2_PIN ;
-		_delay_ms(FLICKER_DELAY);
-		LED3_PORT |= LED3_PIN ;
-		_delay_ms(FLICKER_DELAY);
-		LED4_PORT |= LED4_PIN ;
-		_delay_ms(FLICKER_DELAY);
-		LED5_PORT |= LED5_PIN ;
-		_delay_ms(FLICKER_DELAY);
+	}
 }
 
 void led_runDown(uint8_t onOff)
@@ -151,37 +161,31 @@ void led_runDown(uint8_t onOff)
 
 void led_switchDown()
 {
-		LED5_PORT |= (LED5_PIN) ;
+	for (uint8_t k = 5; k > 0; k--)
+	{
+		led_set(k);
 		_delay_ms(FLICKER_DELAY);
-		LED4_PORT |= LED4_PIN ;
-		_delay_ms(FLICKER_DELAY);
-		LED3_PORT |= LED3_PIN ;
-		_delay_ms(FLICKER_DELAY);
-		LED2_PORT |= LED2_PIN ;
-		_delay_ms(FLICKER_DELAY);
-		LED1_PORT |= LED1_PIN ;
-		_delay_ms(FLICKER_DELAY);
-
+	}
 }
 
 void led_switchON()
 {
-	LED1_PORT |= (LED1_PIN) ;
-	LED2_PORT |= (LED2_PIN) ;
-	LED3_PORT |= (LED3_PIN) ;
-	LED4_PORT |= (LED4_PIN) ;
-	LED5_PORT |= (LED5_PIN) ;
+
+	for (uint8_t k = 1; k < 6; ++k)
+	{
+		led_set(k);
+	}
 }
 
 void led_switchOFF()
 {
-	LED1_PORT &= ~(LED1_PIN) ;
-	LED5_PORT &= ~(LED5_PIN) ;
+	led_clear(1);
+	led_clear(5);
 	_delay_ms(FLICKER_DELAY);
-	LED4_PORT &= ~(LED4_PIN) ;
-	LED2_PORT &= ~(LED2_PIN) ;
+	led_clear(2);
+	led_clear(4);
 	_delay_ms(FLICKER_DELAY);
-	LED3_PORT &= ~(LED3_PIN) ;
+	led_clear(3);
 }
 
 void led_animate()
