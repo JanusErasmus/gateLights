@@ -34,7 +34,7 @@ EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 4
+Sheet 1 5
 Title "Running Gate Lights"
 Date "2017-05-20"
 Rev ""
@@ -128,4 +128,15 @@ Wire Wire Line
 	2150 4600 3050 4600
 Wire Wire Line
 	3050 4700 2150 4700
+$Sheet
+S 1550 2700 1050 700 
+U 59208773
+F0 "RS485" 60
+F1 "rs485.sch" 60
+F2 "RS485_A" I L 1550 2950 60 
+F3 "RS485_B" I L 1550 3150 60 
+F4 "DE" I R 2600 3050 60 
+F5 "DO" I R 2600 2850 60 
+F6 "DI" I R 2600 3250 60 
+$EndSheet
 $EndSCHEMATC
