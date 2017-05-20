@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name GateLight)(type KiCad)(uri C:/Projects/gateLights/Schematic/gateLights/custom.pretty)(options "")(descr "Custom Library for lights"))
+)
